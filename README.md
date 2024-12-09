@@ -2,7 +2,7 @@
 
 `Time-stamp: <2024-12-09 16:28:19 christophe@pallier.org>`
 
-In human experimental psychology, many experiments  requires the recording of reaction-times. Although the keyboard or the mouse buttons can be used to record manual responses, they can potentially introduce non-negligeable measurement errors ([refs](#refs))
+In human experimental psychology, many experiments require the recording of reaction-times. Although the keyboard or the mouse buttons can be used to record manual responses, they can potentially introduce non-negligeable measurement errors ([refs](#refs))
  
 The picture below shows a simple response key device based on an [Arduino Leornardo](https://docs.arduino.cc/hardware/leonardo/) microcontroller and a [Morse key](https://putikeeg.com/products/straight-key-morse).
 
@@ -102,9 +102,11 @@ You can compile and upload this sketch to the Leonardo using the [arduino softwa
 
 ## Limitations
 
-* the code above only works for one response key (but could be modified to handle several keys)
-* the threshold values and delay for the schmitt triggger algorithm may need to be tunes to the response key.
+* The device is seen as a keyboard. Therefore all delays due to the OS, the HID driver, the scanning of the USB port, remain present. One solution would be to measure the reaction time within the Arduino itself, and then sent it to the PC upon request (which requires to implement a dialog between the PC and the Arduino). 
 * The code detects the key press, but not the key release.  So with the code above, it is not possible to measure the duration of a press.  Also, note that the arduino leonardo `keyboard.write` function immediately emits a keyup event after the keypress one. 
+
+* The code only works for one response key (but could be modified to handle several keys)
+* The threshold values and delay for the schmitt triggger algorithm may need to be tunes to the response key.
 
 <a name="refs">References</a>
 
