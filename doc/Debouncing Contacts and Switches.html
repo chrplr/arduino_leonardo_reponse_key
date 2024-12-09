@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)https://www.ganssle.com/debouncing.htm -->
+<html lang="en"><!-- InstanceBegin template="/Templates/Main_Template.dwt" codeOutsideHTMLIsLocked="false" --><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<meta name="viewport" content="width=device-width">
+<!-- InstanceBeginEditable name="description" -->
+<meta name="description" content="Debouncing switches and contacts is surprisingly subtle. This page shows actual bounce characteristics of a number of switches and gives code to debounce them.">
+     <!-- InstanceEndEditable -->
+<meta name="copyright" content="Copyright by The Ganssle Group. All rights reserved.">
+<!-- InstanceBeginEditable name="doctitle" -->
+    <title>Debouncing Contacts and Switches</title>
+<!-- InstanceEndEditable -->
+<link href="./Debouncing Contacts and Switches_files/tgg.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="mainwrapper">
+  <div id="header">
+    <div id="logo">
+      <a href="https://www.ganssle.com/"><img src="./Debouncing Contacts and Switches_files/tgg-title.gif" alt="The Ganssle Group logo"></a>
+    </div>
+    <div id="logo-small">
+      <a href="https://www.ganssle.com/"><img src="./Debouncing Contacts and Switches_files/tgg-title-small-screen.gif" alt="The Ganssle Group logo"></a>
+    </div>
+  </div>
+  <div id="cssmenumobile">
+    <ul>
+      <li><a href="https://www.ganssle.com/navigation.html">Click here for a navigation menu</a></li>
+    </ul>
+  </div>
+  <div id="cssmenu">
+    <ul>
+      <li><a href="https://www.ganssle.com/tem-back.htm"><span>Newsletter</span></a></li>
+      <li><a href="https://www.ganssle.com/expertwitness.html"><span>Expert<br>Witness</span></a></li>
+      <li><a href="https://www.ganssle.com/blog/index.html"><span>Blog</span></a></li>
+      <li><a href="https://www.ganssle.com/video/video-list.html"><span>Videos</span></a></li>
+      <li class="active has-sub"><a href="https://www.ganssle.com/tools.htm"><span>Tool &amp; Book<br>Reviews</span></a>
+        <ul>
+          <li><a href="https://www.ganssle.com/tools.htm"><span>Tool Reviews</span></a></li>
+          <li><a href="https://www.ganssle.com/book.htm"><span>Jack's Books</span></a></li>
+          <li class="last"><a href="https://www.ganssle.com/bkreviews.htm"><span>Other Embedded Books</span></a></li>
+        </ul>
+      </li>
+      <li class="active has-sub"><a href="https://www.ganssle.com/spcl_reports.htm"><span>Special<br>Reports</span></a>
+        <ul>
+          <li><a href="https://www.ganssle.com/reports/ultra-low-power-design.html"><span>Designing Ultra-Low Power Systems</span></a></li>
+          <li><a href="https://www.ganssle.com/item/perils-of-scope-probes.html"><span>Surprising Scope Probe Issues</span></a></li>
+          <li><a href="https://www.ganssle.com/salsurv2020.html"><span>2020 Salary Survey</span></a></li>
+          <li><a href="https://www.ganssle.com/item/debouncing-switches-contacts-code.htm"><span>Debouncing Contacts</span></a></li>
+          <li><a href="https://www.ganssle.com/item/great-watchdog-timers.htm"><span>Watchdog Timers</span></a></li>
+          <li><a href="https://www.ganssle.com/item/history-of-the-microprocessor.html"><span>Microprocessor History</span></a></li>
+          <li><a href="https://www.ganssle.com/item/becoming-a-consultant.htm"><span>Being a Consultant</span></a></li>
+          <li><a href="https://www.ganssle.com/misc/wom.html"><span>Write-only Memory</span></a></li>
+          <li><a href="https://www.ganssle.com/item/guide-to-managing-firmware-teams.htm"><span>Process Improvement for the Boss</span></a></li>
+          <li><a href="https://www.ganssle.com/item/writing-great-comments-firmware.htm"><span>Commenting Code</span></a></li>
+          <li><a href="https://www.ganssle.com/item/how-to-test-ram.htm"><span>Testing RAM</span></a></li>
+          <li><a href="https://www.ganssle.com/item/becoming-an-embedded-developer.htm"><span>Getting Into Embedded Work</span></a></li>
+          <li><a href="https://www.ganssle.com/inspections.htm"><span>Code Inspections</span></a></li>
+          <li><a href="https://www.ganssle.com/item/automatically-debugging-firmware.htm"><span>Automatic Bug-Finding</span></a></li>
+          <li><a href="https://www.ganssle.com/item/instrumenting-firmware-for-debugging.htm"><span>eXtreme Instrumenting</span></a></li>
+          <li><a href="https://www.ganssle.com/item/approximations-for-trig-c-code.htm"><span>Math Approximations - Trig</span></a></li>
+          <li><a href="https://www.ganssle.com/item/approximations-c-code-exponentiation-log.htm"><span>Math Approximations - Other Functions</span></a></li>
+          <li class="last"><a href="https://www.ganssle.com/item/creating-great-resumes.htm"><span>Better Resumes</span></a></li>
+        </ul>
+      </li>
+      <li class="active has-sub"><a href="https://www.ganssle.com/articles-subj.htm"><span>Articles</span></a>
+        <ul>
+          <li> <a href="https://www.ganssle.com/articles.htm"> <span>All Articles</span></a> </li>
+          <li> <a href="https://www.ganssle.com/articles-subj.htm"> <span>Analog, Filtering, etc</span></a> </li>
+          <li> <a href="https://www.ganssle.com/articles-subj.htm#Communications"><span>Communications</span></a> </li>
+          <li> <a href="https://www.ganssle.com/articles-subj.htm#Debugging"> <span>Debugging</span></a> </li>
+          <li> <a href="https://www.ganssle.com/articles-subj.htm#Fun"> <span>Fun Embedded Stuff</span></a> </li>
+          <li> <a href="https://www.ganssle.com/articles-subj.htm#Hardware"> <span>Hardware</span></a> </li>
+          <li> <a href="https://www.ganssle.com/articles-subj.htm#Historical"> <span>Historical</span></a> </li>
+          <li> <a href="https://www.ganssle.com/articles-subj.htm#Managing"> <span>Managing Projects</span></a> </li>
+          <li> <a href="https://www.ganssle.com/articles-subj.htm#Math"> <span>Math in Computers</span></a> </li>
+          <li> <a href="https://www.ganssle.com/articles-subj.htm#Memory"> <span>Memory</span></a> </li>
+          <li> <a href="https://www.ganssle.com/articles-subj.htm#Philosophical"> <span>Philosophical and Career</span></a> </li>
+          <li> <a href="https://www.ganssle.com/articles-subj.htm#realtime"> <span>Real Time</span></a> </li>
+          <li> <a href="https://www.ganssle.com/articles-subj.htm#Processes"> <span>Software &amp; Firmware</span></a> </li>
+          <li> <a href="https://www.ganssle.com/articles-subj.htm#Tools"> <span>Tools for Embedded Developers</span></a> </li>
+          <li class="last"> <a href="https://www.ganssle.com/"> <span>Home</span></a> </li>
+        </ul>
+      </li>
+      <li class="active has-sub"><a href="https://www.ganssle.com/randomrants.htm"><span>Random<br>Rants</span></a>
+        <ul>
+          <li><a href="https://www.ganssle.com/randomrants.htm#electronics"> <span>Electronics</span></a></li>
+          <li><a href="https://www.ganssle.com/randomrants.htm#business"> <span>Business Issues</span></a></li>
+          <li><a href="https://www.ganssle.com/randomrants.htm#softwareengineering"><span>Software Engineering</span></a></li>
+          <li><a href="https://www.ganssle.com/randomrants.htm#products"> <span>Products and Reviews</span></a></li>
+          <li><a href="https://www.ganssle.com/randomrants.htm#philosophy"> <span>Philosophy of Engineering</span></a></li>
+          <li><a href="https://www.ganssle.com/randomrants.htm#misc"> <span>Miscellaneous</span></a></li>
+          <li><a href="https://www.ganssle.com/randomrants.htm#history"> <span>History of Electronics and Embedded</span></a></li>
+          <li><a href="https://www.ganssle.com/randomrants.htm#software"> <span>Software</span></a></li>
+          <li><a href="https://www.ganssle.com/randomrants.htm#random"> <span>Random Thoughts</span></a></li>
+          <li><a href="https://www.ganssle.com/randomrants.htm#fun"> <span>Fun Stuff</span></a></li>
+          <li class="last"><a href="https://www.ganssle.com/randomrants.htm#realtime"> <span>Real-Time Issues</span></a></li>
+        </ul>
+      </li>
+      <li><a href="https://www.ganssle.com/jokes.htm"><span>Humor</span></a></li>
+      <li class="last"><a href="https://www.ganssle.com/contact.htm"> <span>Contact/Search</span></a>
+        <ul>
+          <li> <a href="https://www.ganssle.com/contact.htm"> <span>Contact Info</span></a> </li>
+          <li> <a href="https://www.ganssle.com/search/search.html"> <span>Search This Site</span></a> </li>
+          <li> <a href="https://www.ganssle.com/bio.htm"><span>Jack's Bio</span></a> </li>
+          <li> <a href="https://www.ganssle.com/expertwitness.html"><span>Expert Witness</span></a></li>
+          <li class="last"><a href="https://www.ganssle.com/privacy-policy.html"><span>Our Privacy Policy</span></a></li>
+         </ul>
+      </li>
+    </ul>
+  </div>
+  
+  <div id="content">
+  <section id="mainContent"> 
+
+  <!-- Main content starts here --> 
+  <!-- InstanceBeginEditable name="EditRegion3" --> 
+
+<!-- #EndLibraryItem --><h1>A Guide to Debouncing, or, How to Debounce a Contact in Two Easy Pages, by Jack Ganssle</h1>
+<p>This page gives scope captures of how a number of switches actually bounce, and provides C code that eliminate that bouncing.</p>
+<p>This report is divided into two parts:</p>
+<ul>
+  <li>Part 1 (which you're reading) describes the problem of debouncing and gives emperical data.</li>
+  <li><a href="https://www.ganssle.com/debouncing-pt2.htm">Part 2</a> shows, first, hardware solutions and then software debouncing code.</li>
+</ul>
+<p><br>
+  August 2004<br>
+  Rev 1: April, 2006<br>
+  Rev 2: April, 2007<br>
+  Rev 3: June, 2008<br>
+  Rev 4: March, 2014 (Added link to Trent Cleghorn's code)</p>
+<p>The beer warms a bit as you pound the remote control. Again and again, temper fraying, you click the "channel up" key until the TV finally rewards your efforts. But it turns out channel 345 is playing Jeopardy so you again wave the remote in the general direction of the set and continue fiddling with the buttons. </p>
+<p>Some remotes work astonishingly well, even when you bounce the beam off three walls before it impinges on the TV's IR detector. Others don't. One vendor told me reliability simply isn't important as users will subconsciously hit the button again and again till the channel changes.</p>
+          <p>When a single remote press causes the tube to jump two channels, we developers know lousy debounce code is at fault. The FM radio on my sailboat has a tuning button that advances too far when I hit it hard. The usual suspect: bounce. </p>
+          <p>When the contacts of any mechanical switch bang together they rebound a bit before settling, causing bounce. Debouncing, of course, is the process of removing the bounces, of converting the brutish realities of the analog world into pristine ones and zeros. Both hardware and software solutions exist, though by far the most common are those done in a snippet of code.</p>
+          <p>Surf the net to sample various approaches to debouncing. Most are pretty lame. Few are based on experimental bounce parameters. A medley of anecdotal tales passed around the newsgroups substitute for empirical evidence.</p>
+          <p>Ask most developers about the characteristics of a bounce and they'll toss out a guess at a max bounce time. But there's an awful lot going on during the bounce. How can we build an effective bounce filter, in hardware or software, unless we understand the entire event? During that time a long and complex string of binary bits is hitting our code. What are the characteristics of that data?</p>
+          <p>We're writing functions that process an utterly mysterious and unknown input string. That's hardly the right way to build reliable code.</p>
+          <table class="suggestion">
+            <tbody><tr>
+              <td><i>Suggestion: Subscribe to my free <a href="https://www.ganssle.com/tem-subunsub.html">newsletter</a> which often covers debouncing and related subjects.</i> </td>
+            </tr>
+          </tbody></table>
+          <h1>The Data<br>
+          </h1>
+          <p>So I ran some experiments.</p>
+          <p>I pulled some old switches out of my junk box. 20 bucks at the ever-annoying local Radio Shack yielded more (have you noticed that Radio Shack has fewer and fewer components? It's getting hard to buy a lousy NPN transistor there).  Baynesville Electronics (<a href="http://www.baynesvilleelectronics.com/">http://www.baynesvilleelectronics.com</a>), Baltimore's best electronics store, proved a switch treasure trove. Eventually I had 18 very different kinds of switches.</p>
+          <p>My desktop PC always has a little $49 MSP430 (TI's greatly underrated 16 bit microprocessor) development board attached, with IAR's toolchain installed. It's a matter of seconds to pop a little code into the board and run experiments. Initially I'd planned to connect each switch to an MSP430 input and have firmware read and report bounce parameters. A bit of playing around with the mixed signal scope (MSO) showed this to be an unwise approach. </p>
+          <table width="80%" border="0" cellpadding="0">
+            <tbody><tr>
+              <td width="5" bgcolor="#0070C0"></td>
+              <td><p>I gave up on regular oscilloscopes. Now my Agilent MSO-X 3054A MSO is my go-to scope. An MSO is a mixed-signal oscilloscope; it combines a logic analyzer and a scope. Trigger from either an analog channel or a digital pattern to start the trace, and see how the digital and analog interact.</p></td>
+            </tr>
+          </tbody></table><p align="left">Many of the switches exhibited quite wild and unexpected behavior. Bounces of under 100 nsec were common (more on this later). No reasonable micro could reliably capture these sorts of transitions, so I abandoned that plan and instead used the scope, connecting both analog and digital channels to the switch. This let me see what was going on in the analog domain, and how a computer would interpret the data. A 5 volt supply and 1k pull-up completed the test jig.</p>
+          <p>If a sub-100 nsec transition won't be captured by a computer why worry about it? Unfortunately, even a very short signal will toggle the logic once in a while. Tie it to an interrupt and the likelihood increases. Those transitions, though very short, will occasionally pervert the debounce routine. For the sake of the experiment we need to see them.</p>
+          <p>I tested the trigger switches from an old cheap game-playing joystick (the three yellow ones in the picture), the left mouse button from an ancient Compaq computer (on PCB in upper left corner), toggle switches, pushbuttons, and slide switches. Some were chassis mount, others were to be soldered directly onto circuit boards.</p>
+          <p align="center"><img src="./Debouncing Contacts and Switches_files/debswitches.jpg" width="451" height="329" alt="Switches used to develop debounce algorithm"><br>
+          </p>
+          <p align="center"><em>Switches tested. The upper left is switch A, with B to its right, working to E (in red), and then F below A, etc.</em></p>
+<!-- ***** ID_START ***** -->
+ 
+ 
+ 
+<!-- ***** ID_END ***** -->
+          <p>The results were interesting.</p>
+          <h1>Bounce Stats</h1>
+          <p>            So how long do switches bounce for? The short answer: sometimes a lot, sometimes not at all.</p>
+          <p>Only two switches exhibited bounces exceeding 6200 µsec. Switch E, what seemed like a nice red pushbutton, had a worst case bounce when it opened of 157 msec - almost a 1/6 of a second! Yuk. Yet it never exceeded a 20 µsec bounce when closed. Go figure.</p>
+          <p>Another switch took 11.3 msec to completely close one time; other actuations were all under 10 msec.</p>
+          <p>Toss out those two samples and the other 16 switches exhibited an average 1557 µsec of bouncing, with, as I said, a max of 6200 µsec. Not bad at all.</p>
+          <p>Seven of the switches consistently bounced much longer when closed than when opened. I was amazed to find that for most of the switches many bounces on opening lasted for less than 1 µsec - that's right, less than a millionth of a second. Yet the very next experiment on the same switch could yield a reading in the hundreds of microseconds. </p>
+          <p>Identical switches were not particularly identical. Two matching pairs were tested; each twin differed from its brother by a factor of two.</p>
+          <p>Years ago a pal and I installed a system for the Secret Service that had thousands of very expensive switches on panels in a control room. We battled with a unique set of bounce challenges because the uniformed officers were too lazy to stand up and press a button. They tossed rulers at the panels from across the room. Different impacts created (and sometimes destroyed, but hey, it's only taxpayer money after all) quite an array of bouncing. So in these experiments I tried to actuate each device with a variety of techniques. Pushing hard or soft, fast or slow, releasing gently or with a snap, looking for different responses. F, a slide switch, was indeed very sensitive to the rate of actuation. Toggle switch G showed a 3 to 1 difference in bounce times depending on how fast I bonked its lever. A few others showed similar results but there was little discernable pattern.</p>
+          <p align="center"> <img src="./Debouncing Contacts and Switches_files/debouncetimes.jpg" width="500" alt="Bounce times of different switches"><br>
+          </p>
+          <p>I was fascinated with the switches' analog behavior. A few operated as expected, yielding a solid zero or 5 volts. But most gave much more complicated responses. </p>
+          <p>The MSO responded to digital inputs assuming TTL signal levels. That means 0 to .8 volts is a zero, 0.8 to 2.0 is unknown, and above 2 a one. The instrument displayed both digital and analog signals to see how a logic device would interpret the real-world's grittiness. </p>
+          <p>Switch A was typical. When opened the signal moved just a bit above ground and wandered in the hundreds of millivolts range for up to 8 msec. Then it suddenly snapped to a one. As the signal meandered up to near a volt the scope interpreted it as a one, but the analog's continued uneasy rambles took it in and out of "one" territory. The MSO showered the screen with hash as it tried to interpret the data. </p>
+          <p>It was if the contacts didn't bounce so much as wiped, dragging across each other for a time, acting like a variable resistor.<br>
+          </p>
+          <p align="center"> <img src="./Debouncing Contacts and Switches_files/debounceswitcha.jpg" width="500" alt="Scope trace of bouncing switch"><br>
+          </p>
+          <p>Looking into this more deeply I expanded the traces for switch C and, with the help of Ohm's Law, found the resistance when the device opened crawled pretty uniformly over 150 µsec from zero to 6 ohms, before suddenly hitting infinity. There was no bouncing per se; just an uneasy ramp up from 0 to 300 mV before it suddenly zapped to a solid +5.<br>
+          </p>
+          <p align="center">   <img src="./Debouncing Contacts and Switches_files/debounceswitchc.jpg" width="462" alt="Scope trace of bouncing switch"><br>
+          </p>
+          <p>Another artifact of this wiping action was erratic analog signals treading in the dreaded no-man's land of TTL uncertainty (0.8 to 2.0 volts), causing the MSO to dither, tossing out ones or zeroes almost randomly, just as your microprocessor would if connected to the same switch.</p>
+          <p align="center"> <img src="./Debouncing Contacts and Switches_files/debounceswitchb.jpg" width="500" alt="Scope trace of bouncing switch"><br>
+          </p>
+          <p>The two from the el cheapo game joystick were nothing more than gold contacts plated onto a PCB; a rubber cover, when depressed, dropped some sort of conductive elastomer onto the board. Interestingly, the analog result was a slow ramp from zero to five volts, with no noise, wiping or other uncertainty. Not a trace of bounce. And yet.. . . the logic channel showed a msec or so of wild oscillations! What's going on?</p>
+          <p>With TTL logic, signals in the range of 0.8 to 2.0 volts are illegal. Anything goes, and everything did. Tie this seemingly bounce-free input to your CPU and prepare to deal with tons of oscillation - virtual bounces.<br>
+          </p>
+          <p align="center"> <img src="./Debouncing Contacts and Switches_files/debounceswitchk.jpg" width="500" alt="Scope trace of bouncing switch"><br>
+          </p>
+          <p>My assessment, then, is that there's much less whacking of contacts going on than we realize. A lot of the apparent logic hash is from analog signals treading in illegal logic regions. Regardless, the effect on our system is the same and the treatment identical. But the erratic nature of the logic warns us to avoid simple sampling algorithms, like assuming two successive reads of a one means a one.</p>
+          <h1>Anatomy of a Bounce<br>
+          </h1>
+          <p>So we know how long the contacts bounce and that lots of digital zaniness - ultra short pulses in particular - can appear.</p>
+          <p>But what happens during the bounce? Quite a lot, and every bounce of every switch was different. Many produced only high speed hash till a solid one or zero appeared. Others generated a serious pulse train of discernable logic levels like one might expect. I was especially interested in results that would give typical debounce routines heartburn. </p>
+          <p>Consider switch E again, that one with the pretty face that hides a vicious 157 msec bouncing heart. One test showed the switch going to a solid one for 81 msec, after which it dropped to a perfect zero for 42 msec before finally assuming its correct high state. Think what that would do to pretty much any debounce code!</p>
+          <p align="center"> <img src="./Debouncing Contacts and Switches_files/debounceswitche.jpg" width="500" alt="Scope trace of bouncing switch"><br>
+          </p>
+          <p>Switch G was pretty well behaved, except that a couple of times it gave a few microsecond one before falling to zero for over 2 msec. Then it assumed its correct final one. The initial narrow pulse might escape your polled I/O, but would surely fire off an interrupt, had you dared wire the system so. The poor ISR would be left puzzled as it contemplates 2 msec of nothingness. "Me? Why did it invoke me? Ain't nuthin' there!"<br>
+          </p>
+          <p align="center"> <img src="./Debouncing Contacts and Switches_files/debounceswitchg.jpg" width="500" alt="Scope trace of bouncing switch"><br>
+          </p>
+          <p>O is a very nice, high quality microswitch which never showed more than 1.18 msec of bouncing. But digging deeper I found it usually generated a pulse train guaranteed to play havoc with simple filter code. There's no high speed hash, just hard-to-eliminate solid ones and zeroes. One actuation yielded 7 clean zeroes levels ranging in time from 12 to 86 µsec, and 7 logic ones varying from 6 to 95 µsec. Easy to filter? Sure. But not by code that just looks for a couple of identical reads.<br>
+          </p>
+          <p align="center"><img src="./Debouncing Contacts and Switches_files/debounceswitcho.jpg" width="465" height="270" alt="Scope trace of bouncing switch"><br>
+          </p>
+          <p align="center"><img src="./Debouncing Contacts and Switches_files/debounceswitchq.jpg" width="500" alt="Scope trace of bouncing switch"></p>
+          <p>What happens if we press the buttons really, really fast? Does that alter the bouncing in a significant way? It's awfully hard for these aging  fingers to do anything particularly quickly, so I set up a modified experiment, connecting my MSP430 board to a sizeable 3 amp four pole relay. Downloading code into the CPU's flash let me toggle the relay at different rates. </p>
+<p>Bounce times ranged from 410 to 2920 µsec, quite similar to those of the switches, presumably validating the experiment. The relay had no noticeable analog effects, banging cleanly between 0 and 5 volts. </p>
+          <p>The raucous clacking of contacts overwhelmed our usual classical fare for a few hours as the MSO accumulated bounce times in storage mode. When the relay opened it always had a max bounce time of 2.3 to 2.9 msec, at speeds from 2.5 to 30 Hz. More variation appeared on contact closure: at 2.5 Hz bounces never exceeded 410 µsec, which climbed to 1080 µsec at 30 Hz. Why? I have no idea. But it's clear there is some correlation between fast actuations and more bounce. These numbers suggest a tractable factor of two increase, though, not a scary order of magnitude or more.          </p>
+          <p>In the bad old days we used a lot of leaf switches which typically bounced forever. Weeks, it seemed. Curious I disassembled a number of cheap consumer products expecting to find these sort of inexpensive devices. None found! Now that everything is mounted on a PCB vendors use board-mounted switches, which are pretty darn good little devices.</p>
+          <p> <img src="./Debouncing Contacts and Switches_files/debouncepcb.jpg" width="469" height="367" alt="PCB switches"><br>
+          </p>
+          <p>I admit these experiments aren't terribly scientific. No doubt someone with a better education and more initials following his name could do a more reputable study for one of those journals no one reads. But as far as I know there's no data on the subject available anywhere, and we working engineers need some empirical information. </p>
+          <p>Use a grain of salt when playing with these numbers. Civil engineers don't really know the exact strength of a concrete beam poured by indolent laborers, so they beef things up a bit. They add margin. Do the same here. Assume things are worse than shown.</p>
+          <p><a href="https://www.ganssle.com/debouncing-pt2.htm">Go to Page Two of This report</a> which has hardware and software debounce solutions.<br>
+          </p>
+          <h1>&nbsp;</h1>
+          <!-- InstanceEndEditable --> </section>
+
+  <section id="sidebar"> 
+  <!-- Sidebar starts here. -->
+
+
+  <div id="adimage">
+    <!-- Rotation code.-->
+    <script type="text/javascript">
+  <!--
+  var num_ads = 3;
+<!--  Be sure there's a comma after next-to-last ad/URL, after the quotation mark-->
+var ad = [
+  "<img src=https://www.ganssle.com/images/segger-emcompress-wg.gif>",
+  "<img src=https://www.ganssle.com/images/px5-ad.png>",
+  "<img src=https://www.ganssle.com/images/lauterbach_debugger1.jpg>"
+
+
+
+  ];
+  var ad_url = [
+  "<a href=https://www.segger.com/emcompress-wg/>",
+  "<a href=https://www.px5rtos.com/>",
+  "<a href=https://www.lauterbach.com/>"
+
+
+
+   ];
+  var j = Math.round(Math.random() * (num_ads - 1));
+
+  for(i=0; i != num_ads; i++)
+  {
+    document.write(ad_url[j]);
+    document.write(ad[j]);
+    document.write("</a><br />");
+    j = j + 1;
+    if(j == num_ads)j = 0;
+  }
+  //-->
+    </script><a href="https://www.segger.com/emcompress-wg/"><img src="./Debouncing Contacts and Switches_files/segger-emcompress-wg.gif"></a><br><a href="https://www.px5rtos.com/"><img src="./Debouncing Contacts and Switches_files/px5-ad.png"></a><br><a href="https://www.lauterbach.com/"><img src="./Debouncing Contacts and Switches_files/lauterbach_debugger1.jpg"></a><br>
+  </div>
+ <br>
+ <!--
+  <p style="text-align:center"><a href="https://www.ganssle.com/advertise.html"><img src="https://www.ganssle.com/images/ganssle-dot-com-ad.jpg"></a>
+	  Advertise with us! Reach 200K embedded developers per month. More info <a href="https://www.ganssle.com/advertise.html">here</a>.</p>
+-->
+  
+  </section>
+  </div>
+  <footer>
+  <hr>
+  <p>The Ganssle Group - <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;tf=1&amp;to=info@ganssle.com&amp;su=Embedded%20Muse" target="_blank">info@ganssle.com</a> - copyright TGG, all rights reserved. Contact info <a href="https://www.ganssle.com/contact.htm">here</a>. 
+  </p>
+  </footer>
+</div>
+
+
+<iframe id="zRGhQHLV" frameborder="0" src="./Debouncing Contacts and Switches_files/translateSandbox.html" style="width: 0px; height: 0px; display: none;"></iframe><div id="pocket-extension-root"><div class="pocket-extension g366awb g1wkq7a6 pocket-theme-light"><div class="d5dq2r3"><div class="doorHanger"><header class="header h1ypxqj3"><div class="save-status"><div class="icon-wrapper"><span class="igxbmuu icon "><svg aria-labelledby=" " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26"><path fill="#EE4056" title="Pocket" alt="Pocket" d="M26,4a2,2,0,0,0-2-2H2A2,2,0,0,0,0,4v9c0,0.1,0,.2,0,0.4s0,0.4,0,.6c0,4,5.8,11,13,11s13-7,13-11c0-.2,0-0.4,0-0.6s0-.2,0-0.4V4Zm-5.5,7-6,6a1.9,1.9,0,0,1-2.9,0l-6-6A1.7,1.7,0,0,1,8,8.5l5,5,5-5a1.7,1.7,0,0,1,2.5,0h0A1.7,1.7,0,0,1,20.5,11Z"></path></svg></span></div><div class="saveBlock">Saved to Pocket</div></div><button class="pocket-button bzy3u3x inline">Remove</button></header><div class="item-preview p11uhn14"><img src="./Debouncing Contacts and Switches_files/debswitches.jpg"><div><h3>Debouncing Contacts and Switches</h3><p>www.ganssle.com</p></div></div><div class="tagging-wrapper tne2ump"><div role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="downshift-0-label"><div class="tagging-well"><div class="tagging-placeholder">Add Tags</div><div class="input-wrapper i657hj0"><div style="display: inline-block;"><input aria-autocomplete="list" aria-labelledby="downshift-0-label" autocomplete="off" id="downshift-0-input" value="" style="box-sizing: content-box; width: 2px;"><div style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-size: 16px; font-family: &quot;Graphik Web&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-weight: 400; font-style: normal; letter-spacing: normal; text-transform: none;"></div></div></div></div></div><div class="suggestions s1eqeo30"><ul></ul></div></div><footer class="footer f1mytilp"><button class="pocket-button bzy3u3x inline buttonLink"><span class="igxbmuu icon "><svg aria-labelledby=" " fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM5 12a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM5 19a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path><path fill-rule="evenodd" d="M7 5a1 1 0 011-1h13a1 1 0 110 2H8a1 1 0 01-1-1zM7 12a1 1 0 011-1h13a1 1 0 110 2H8a1 1 0 01-1-1zM7 19a1 1 0 011-1h13a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg></span>Saves</button><button class="pocket-button bzy3u3x inline buttonLink"><span class="igxbmuu icon "><svg aria-labelledby=" " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.736 10.317l-2.942-.5a7.08 7.08 0 00-.448-1.077l1.729-2.434a.316.316 0 00-.034-.407l-1.94-1.94a.316.316 0 00-.407-.034l-2.434 1.73a7.088 7.088 0 00-1.078-.449l-.499-2.942A.317.317 0 0013.371 2H10.63a.317.317 0 00-.312.264l-.5 2.942c-.37.12-.73.27-1.077.448L6.306 3.925a.317.317 0 00-.407.034L3.959 5.9a.317.317 0 00-.034.407l1.73 2.434a7.085 7.085 0 00-.449 1.078l-2.942.499a.317.317 0 00-.264.312v2.742a.317.317 0 00.264.312l2.942.5c.12.37.27.73.448 1.077l-1.729 2.434a.316.316 0 00.034.408L5.9 20.04a.317.317 0 00.407.034l2.434-1.73c.347.18.707.33 1.078.449l.499 2.942a.317.317 0 00.312.264h2.742a.317.317 0 00.312-.264l.5-2.942c.37-.12.73-.27 1.077-.448l2.434 1.729a.317.317 0 00.407-.034l1.94-1.94a.317.317 0 00.034-.407l-1.73-2.434c.18-.347.33-.707.449-1.078l2.942-.499a.317.317 0 00.264-.312V10.63a.317.317 0 00-.264-.312z"></path><circle cx="12" cy="12" r="3" stroke="currentColor" fill="none" stroke-width="2"></circle></svg></span></button></footer></div></div></div></div><div id="a11y-status-message" role="status" aria-live="polite" aria-relevant="additions text" style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px;"></div><iframe id="3XeJ5VT3" frameborder="0" src="./Debouncing Contacts and Switches_files/translateSandbox(1).html" style="width: 0px; height: 0px; display: none;"></iframe><iframe id="817SxYD6" frameborder="0" src="./Debouncing Contacts and Switches_files/translateSandbox(2).html" style="width: 0px; height: 0px; display: none;"></iframe></body><!-- InstanceEnd --></html>
